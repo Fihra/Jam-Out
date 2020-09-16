@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+.keyboard-container {
+  padding: 100px;
+  position: relative;
+
+}
+
+.piano-container {
+  /* display: flex; */
+  align-items: center;
+  padding: 150px;
+}
+
+.keyboard-settings {
+  display: flex;
+  width: 100px;
+  height: 50px;
+}
