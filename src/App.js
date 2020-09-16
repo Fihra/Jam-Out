@@ -3,6 +3,10 @@ import './App.css';
 import Menu from './components/Menu';
 import Actions from './components/Actions';
 import axios from 'axios';
+import DrumMachine from './components/DrumMachine';
+import Composition from './components/Composition';
+import Keyboard from './components/Keyboard';
+
 
 export const JamContext = createContext(); 
 
@@ -12,8 +16,6 @@ const initialState = {
   data: {}
 };
 const reducer = (state, action) => {
-  console.log(action.payload)
-  // console.log(Actions.FETCH_DATA);
   switch(action.type){
     case Actions.FETCH_DATA:
       return {
@@ -53,7 +55,7 @@ const App = () => {
   }, [])
   
   return (
-    // <JamContext.Provider value={{dataState: data, dataDispatch: dispatch}}>
+    <JamContext.Provider value={{dataState: state, dataDispatch: dispatch}}>
         <div className="App">
             <h1>Jam Out</h1>
               <div>
@@ -63,8 +65,9 @@ const App = () => {
                 
               </div>
             <Menu/>
+            <Keyboard/>
         </div>
-      // </JamContext.Provider>
+      </JamContext.Provider>
 
   );
 }
