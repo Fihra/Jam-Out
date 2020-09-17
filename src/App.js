@@ -58,12 +58,13 @@ const App = () => {
     <JamContext.Provider value={{dataState: state, dataDispatch: dispatch}}>
         <div className="App">
             <h1>Jam Out</h1>
-              <div>
+            <Composition/>
+              {/* <div>
                 {console.log(state)}
                 {state.loading ? 'loading': state.data[0].username}
                 {state.error ? state.error : null}
                 
-              </div>
+              </div> */}
             <Menu/>
             <Keyboard/>
         </div>
