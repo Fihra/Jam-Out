@@ -38,21 +38,28 @@
 }
 
 .keyboard-container {
-  padding: 20px;
+  margin: 120px;
   position: relative;
-
+  display: block;
 }
 
 .piano-container {
   /* display: flex; */
+  position: relative;
   align-items: center;
-  padding: 150px;
+  padding: 170px;
+  
 }
 
 .keyboard-settings {
   display: flex;
-  width: 100px;
-  height: 50px;
+  width: 40px;
+  height: 20px;
+  margin-left: 150px;
+}
+
+.adsr-label{
+  
 }
 
 .music-container {
@@ -81,13 +88,11 @@
 }
 
 .drums-container {
-
-
   width:1200px;
   padding: 20px;
-  flex-wrap: wrap;
+  display: block;
 }
-
+/*========================*/
 .kick-box {
   background-color: black;
   display: inline-block;
@@ -100,7 +105,7 @@
   margin: 3px;
 }
 
-.dot-on {
+.kick-on {
   height: 20px;
   width: 20px;
   margin-top: 20px;
@@ -109,11 +114,74 @@
   display: inline-block;
 }
 
-.dot-off{
+.kick-off{
   height: 20px;
   width: 20px;
   margin-top: 20px;
   background-color: black;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/*========================*/
+
+.cymbal-box {
+  background-color: yellow;
+  display: inline-block;
+  box-sizing: padding-box;
+  padding: 15px;
+  padding-bottom: 3%;
+  border: 1px solid black;
+  width: 30px;
+  height: 30px;
+  margin: 3px;
+}
+
+.cymbal-on {
+  height: 20px;
+  width: 20px;
+  margin-top: 20px;
+  background-color: black;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.cymbal-off{
+  height: 20px;
+  width: 20px;
+  margin-top: 20px;
+  background-color: yellow;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/*========================*/
+.snare-box {
+  background-color: green;
+  display: inline-block;
+  box-sizing: padding-box;
+  padding: 15px;
+  padding-bottom: 3%;
+  border: 1px solid black;
+  width: 30px;
+  height: 30px;
+  margin: 3px;
+}
+
+.snare-on {
+  height: 20px;
+  width: 20px;
+  margin-top: 20px;
+  background-color: blue;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.snare-off{
+  height: 20px;
+  width: 20px;
+  margin-top: 20px;
+  background-color: green;
   border-radius: 50%;
   display: inline-block;
 }

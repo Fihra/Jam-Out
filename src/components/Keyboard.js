@@ -88,7 +88,7 @@ const Keyboard = () => {
                 
                 {/* ADSR */}
                 <h3>ADSR</h3>
-                <label id="attack-label">Attack: {attackLevel}</label>
+                <label className="adsr-label">Attack: {attackLevel}</label>
                 <Slider
                         min={0.0}
                         max={1.0}
@@ -97,7 +97,7 @@ const Keyboard = () => {
                         orientation="vertical"
                         onChange={(e) =>setAttackLevel(parseFloat(e).toFixed(2))}
                 />
-                <label id="Decay-label">Decay: {decayLevel}</label>
+                <label className="adsr-label">Decay: {decayLevel}</label>
                 <Slider
                         min={0.0}
                         max={1.0}
@@ -106,7 +106,7 @@ const Keyboard = () => {
                         orientation="vertical"
                         onChange={(e) =>setDecayLevel(parseFloat(e).toFixed(2))}
                 />
-                <label id="sustain-label">Sustain: {sustainLevel}</label>
+                <label className="adsr-label">Sustain: {sustainLevel}</label>
                 <Slider
                         min={0.0}
                         max={1.0}
@@ -115,7 +115,7 @@ const Keyboard = () => {
                         orientation="vertical"
                         onChange={(e) =>setSustainLevel(parseFloat(e).toFixed(2))}
                 />
-                <label id="release-label">Release: {releaseLevel}</label>
+                <label className="adsr-label">Release: {releaseLevel}</label>
                 <Slider
                         min={0.0}
                         max={1.0}

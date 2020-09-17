@@ -9,7 +9,7 @@ let plucker = new Tone.PluckSynth().toDestination();
 let kickSynth = new Tone.MembraneSynth().toDestination();
 let cymbalSynth = new Tone.MetalSynth(
     {
-        frequency : 100 ,
+        frequency : 20 ,
         envelope : {
         attack : 0.025 ,
         decay : 0.5,
@@ -39,6 +39,10 @@ let snareSynth = new Tone.MembraneSynth({
 }).toDestination();
 
 let synthPart;
+let kickPart;
+let cymbalPart;
+let snarePart;
+
 const Composition = () => {
     const {dataState} = useContext(JamContext);
     
@@ -73,21 +77,44 @@ const Composition = () => {
     useEffect(() => {
         if(notes !== "") {        
             if(isPlaying){    
-                synthPart = new Tone.Sequence(((time, note) => {
-                    plucker.triggerAttackRelease(note, "10hz", time + 0.1);
-                }), notes,"16n");
+                setupParts();
 
                 synthPart.start();
+                kickPart.start();
+                // cymbalPart.start();
+                snarePart.start();
+
                 Tone.Transport.bpm.value = tempo;
                 Tone.Transport.start();
             } else{
                 synthPart.stop();
+                kickPart.stop();
+                cymbalPart.stop();
+                snarePart.stop();
                 Tone.Transport.cancel(0);
                 Tone.Transport.stop();
             }
         }
         
     }, [isPlaying])
+
+    const setupParts = () => {
+        synthPart = new Tone.Sequence(((time, note) => {
+            plucker.triggerAttackRelease(note, "10hz", time + 0.1);
+        }), notes,"16n");
+
+        kickPart = new Tone.Sequence((time, note) => {
+            kickSynth.triggerAttackRelease(note, "5hz", time + 0.1);
+        }, kickNotes, "16n");
+
+        cymbalPart = new Tone.Sequence((time, note) => {
+            cymbalSynth.triggerAttackRelease(note, "2hz", time + 0.1);
+        }, cymbalNotes, "16n");
+
+        snarePart = new Tone.Sequence((time, note) => {
+            snareSynth.triggerAttackRelease(note, "16n", time + 0.1);
+        }, snareNotes, "16n");
+    }
 
     //Jam Song Detail information
     //Title, Username, Description, Tempo
@@ -124,7 +151,23 @@ const Composition = () => {
     const playKickDrum = () => {
         return kickNotes.map((kick, i) => {
             return <div key={i} className="kick-box">
-                {kick !== null ? <span className="dot-on"></span> : <span className="dot-off"></span>}
+                {kick !== null ? <span className="kick-on"></span> : <span className="kick-off"></span>}
+            </div>
+        })
+    }
+
+    const playCymbal = () => {
+        return cymbalNotes.map((cymbal, i) => {
+            return <div key={i} className="cymbal-box">
+                {cymbal !== null ? <span className="cymbal-on"></span> : <span className="cymbal-off"></span>}
+            </div>
+        })
+    }
+
+    const playSnare = () => {
+        return snareNotes.map((snare, i) => {
+            return <div key={i} className="snare-box">
+                {snare !== null ? <span className="snare-on"></span> : <span className="snare-off"></span>}
             </div>
         })
     }
@@ -142,10 +185,14 @@ const Composition = () => {
         <div className="composition-container">
             <button onClick={() => setIsPlaying(!isPlaying)}>{isPlaying ? "Stop" : "Play"}</button>
             {Object.entries(dataState.data).length !==0 ? showDetails() : null }
-            <div className="music-container">
-                {notes.length !== 0 ? showComposition() : null }
-                <div className="drums-container">
-                    {notes.length !== 0 ? playKickDrum() : null }
+                <div className="music-container">
+                    {notes.length !== 0 ? showComposition() : null }
+                    <div className="drums-container">
+                    <label>Kick</label>{notes.length !== 0 ? playKickDrum() : null }
+                    <br></br>
+                    <label>Cymbal</label>{notes.length !== 0 ? playCymbal() : null }
+                    <br></br>
+                    <label>Snare</label>{notes.length !== 0 ? playSnare() : null }
                 </div>
             </div>
         </div>
