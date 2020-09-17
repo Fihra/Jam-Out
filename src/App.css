@@ -38,7 +38,7 @@
 }
 
 .keyboard-container {
-  padding: 100px;
+  padding: 20px;
   position: relative;
 
 }
@@ -56,8 +56,8 @@
 }
 
 .music-container {
-  width: 400px;
-  height: 400px;
+  width: 100%;
+  height: 250px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -69,5 +69,51 @@
   display: inline-block;
   border: 1px solid black;
   text-align: justify;
-  padding: 30px;
+  padding: 20px;
+}
+
+.tempo-slider {
+  position: relative;
+  margin-left: 50%;
+  margin-right: 50%;
+  width: 200px;
+  height: 50px;
+}
+
+.drums-container {
+
+
+  width:1200px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.kick-box {
+  background-color: black;
+  display: inline-block;
+  box-sizing: padding-box;
+  padding: 15px;
+  padding-bottom: 3%;
+  border: 1px solid black;
+  width: 30px;
+  height: 30px;
+  margin: 3px;
+}
+
+.dot-on {
+  height: 20px;
+  width: 20px;
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-off{
+  height: 20px;
+  width: 20px;
+  margin-top: 20px;
+  background-color: black;
+  border-radius: 50%;
+  display: inline-block;
 }

@@ -65,7 +65,7 @@ const App = () => {
                 {state.error ? state.error : null}
                 
               </div> */}
-            <Menu/>
+            {/* <Menu/> */}
             <Keyboard/>
         </div>
       </JamContext.Provider>
