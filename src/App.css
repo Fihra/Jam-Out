@@ -36,7 +36,34 @@
     transform: rotate(360deg);
   }
 }
+/*========================*/
 
+/* Search Section by js file name */
+
+/*========================*/
+/* App.js */
+
+.menu-btn {
+  list-style: none;
+}
+
+.side-menu {
+  position: absolute;
+  height: 30px;
+}
+
+.side-menu button {
+  /* left: 1330px; */
+}
+
+.side-btn {
+  /* float: right; */
+  padding: 20px;
+}
+
+
+/*========================*/
+/* Keyboard.js */
 .keyboard-container {
   margin: 120px;
   position: relative;
@@ -61,6 +88,9 @@
 .adsr-label{
   
 }
+/*========================*/
+
+/* Composition.js */
 
 .music-container {
   width: 100%;
@@ -77,6 +107,8 @@
   border: 1px solid black;
   text-align: justify;
   padding: 20px;
+  width: 30px;
+  height: 30px;
 }
 
 .tempo-slider {
@@ -184,4 +216,27 @@
   background-color: green;
   border-radius: 50%;
   display: inline-block;
+}
+
+/*========================*/
+
+.test-popover {
+  width: 500px;
+  height: 400px;
+  
+}
+
+.test-popover li{
+  display: inline-block;
+  width: auto;
+  height: auto;
+  list-style: none;
+}
+
+.test-button-popover{
+  display: flex;
+  padding-left: 50%;
+  width: 50px;
+  height: 50px;
+  
 }

@@ -3,10 +3,13 @@ import './App.css';
 import Menu from './components/Menu';
 import Actions from './components/Actions';
 import axios from 'axios';
-import DrumMachine from './components/DrumMachine';
 import Composition from './components/Composition';
 import Keyboard from './components/Keyboard';
 
+import Drawer from "@kiwicom/orbit-components/lib/Drawer";
+import Button from '@kiwicom/orbit-components/lib/Button';
+
+const menuButtons = ["New", "Open", "Save"];
 
 export const JamContext = createContext(); 
 
@@ -40,6 +43,7 @@ const reducer = (state, action) => {
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [showDrawer, setShowDrawer] = useState(false);
 
   useEffect(() => {
     axios
@@ -53,19 +57,57 @@ const App = () => {
       })
 
   }, [])
+
+  const showMenu = () => {
+    return menuButtons.map((item, i) => {
+      return <li className="menu-btn"><Button onClick={(e) => menuAction(e, item)}>{item}</Button></li>
+    })
+  }
+
+  const menuAction = (e, item) => {
+    switch(item){
+      case "New":
+        console.log("New Jam");
+        return;
+      case "Open":
+        console.log("Open Jam");
+        return;
+      case "Save":
+        console.log("Save Jam");
+        return;
+      default:
+        return;
+    }
+  }
   
   return (
     <JamContext.Provider value={{dataState: state, dataDispatch: dispatch}}>
         <div className="App">
             <h1>Jam Out</h1>
+              <div className="side-menu">
+                <Button
+                  className='side-btn'
+                  title="Open Drawer"
+                  onClick={() => {setShowDrawer(true)}}
+                />
+                  <Drawer 
+                      actions={
+                          <Button size="small">
+                              Sign in
+                          </Button>
+                      }
+                      onClose={() =>{
+                          setShowDrawer(false);
+                      }}
+                      shown={showDrawer}
+                  >
+                      <ul>
+                        {showMenu()}
+                      </ul>
+                  </Drawer>
+              </div>
             <Composition/>
-              {/* <div>
-                {console.log(state)}
-                {state.loading ? 'loading': state.data[0].username}
-                {state.error ? state.error : null}
-                
-              </div> */}
-            {/* <Menu/> */}
+              
             <Keyboard/>
         </div>
       </JamContext.Provider>

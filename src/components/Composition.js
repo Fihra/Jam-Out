@@ -1,6 +1,18 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { JamContext } from '../App';
 import * as Tone from 'tone';
+import Popover from "@kiwicom/orbit-components/lib/Popover";
+import Button from '@kiwicom/orbit-components/lib/Button';
+
+import MenuHamburger from "@kiwicom/orbit-components/lib/icons/MenuHamburger";
+import PlusCircle from "@kiwicom/orbit-components/lib/icons/PlusCircle";
+
+import Document from "@kiwicom/orbit-components/lib/icons/Document"
+
+import Check from "@kiwicom/orbit-components/lib/icons/Check"
+
+import MusicalInstruments from "@kiwicom/orbit-components/lib/icons/MusicalInstruments"
+
 
 import Slider from 'react-rangeslider';
 import 'react-rangeslider/lib/index.css';
@@ -43,6 +55,8 @@ let kickPart;
 let cymbalPart;
 let snarePart;
 
+let compositionHolder = {};
+
 const Composition = () => {
     const {dataState} = useContext(JamContext);
     
@@ -58,7 +72,7 @@ const Composition = () => {
     const [snareNotes, setSnareNotes] = useState("");
 
     const [isPlaying, setIsPlaying] = useState(false);
-    console.log(dataState.data);
+
     useEffect(() =>{
         if(Object.entries(dataState.data).length !==0){
             const { title, username, description, tempo, notes, bassDrumNotes, cymbalNotes, snareNotes } = dataState.data[0];
@@ -73,6 +87,21 @@ const Composition = () => {
 
         }
     }, [dataState])
+
+    useEffect(() => {
+        compositionHolder = {
+            title: title,
+            username: username,
+            description: description,
+            tempo: tempo,
+            notes: notes,
+            bassDrumNotes: kickNotes,
+            cymbalNotes: cymbalNotes,
+            snareNotes: snareNotes
+        }
+        console.log(compositionHolder);
+    }, [title, username, description, tempo, notes, kickNotes, cymbalNotes, snareNotes])
+
 
     useEffect(() => {
         if(notes !== "") {        
@@ -141,18 +170,24 @@ const Composition = () => {
     const showComposition = () => {   
         return notes.map((note, i) => {
             return (
-                <div key={i} className="note-container">
-                    <label>{typeof(note) === 'object' ? "Rest" : note}</label>
-                </div>
+                // <Popover content={testShow()}>
+                    <div key={i} className="note-container">
+                        {/* <button text="Open"/> */}
+                        <label>{typeof(note) === 'object' ? "Rest" : note}</label>
+                        
+                    </div>
+                // </Popover>
             )
         })
     }
 
     const playKickDrum = () => {
         return kickNotes.map((kick, i) => {
-            return <div key={i} className="kick-box">
-                {kick !== null ? <span className="kick-on"></span> : <span className="kick-off"></span>}
-            </div>
+            return (    
+                <div key={i} className="kick-box">
+                    {kick !== null ? <span className="kick-on"></span> : <span className="kick-off"></span>}
+                </div>   
+            )
         })
     }
 
@@ -181,8 +216,33 @@ const Composition = () => {
        return parsedNotes;
     }
 
+    const testShow = () => {
+        return( 
+            <div className="test-popover">
+                <ul>
+                    <li><Button>Button 1</Button></li>
+                    <li><Button>Button 2</Button></li>
+                    <li><Button>Button 3</Button></li>
+                    <li><Button>Button 4</Button></li>
+                    <li><Button>Button 5</Button></li>
+                    <li><Button>Button 6</Button></li>
+                    <li><Button>Button 7</Button></li>
+                    <li><Button>Button 8</Button></li>
+                </ul>
+                
+                <p>Some text here to describe things</p>
+            </div>
+        )
+    }
+
     return(
         <div className="composition-container">
+           
+            <div className="test-button-popover">
+            <Popover noPadding content={testShow()}>
+                <Button >hello</Button>
+            </Popover>
+            </div>
             <button onClick={() => setIsPlaying(!isPlaying)}>{isPlaying ? "Stop" : "Play"}</button>
             {Object.entries(dataState.data).length !==0 ? showDetails() : null }
                 <div className="music-container">
@@ -195,6 +255,7 @@ const Composition = () => {
                     <label>Snare</label>{notes.length !== 0 ? playSnare() : null }
                 </div>
             </div>
+            
         </div>
     )
 }
