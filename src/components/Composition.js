@@ -168,7 +168,7 @@ const Composition = () => {
         return notes.map((note, i) => {
             return (
                 <div key={i} className="note-container">
-                    <Popover noPadding content={chooseNotes()}>
+                    <Popover noPadding content={chooseNotes(i)}>
                         <Button width={'100%'} size={'large'}>{typeof(note) === 'object' ? "Rest" : note}</Button>
                     </Popover>
                 </div>
@@ -211,17 +211,15 @@ const Composition = () => {
        return parsedNotes;
     }
 
-    const chooseNotes = () => {
-        console.log(accidental);
-        console.log(notesArray);
+    const chooseNotes = (noteIndex) => {
         return( 
             <div className="note-selection">
                 <ul>
                     {notesArray.map((noteSelect, i) => {
                         if(typeof(noteSelect) === 'object'){
-                            return <li><Button>Rest</Button></li>
+                            return <li key={i} onClick={(e) => handleNoteChange(noteSelect, e, noteIndex)}><Button>Rest</Button></li>
                         } else {
-                            return <li><Button>{noteSelect}</Button></li>
+                            return <li key={i}><Button onClick={(e) => handleNoteChange(noteSelect, e, noteIndex)}>{noteSelect}</Button></li>
                         }
                     })}
                 </ul>
@@ -233,6 +231,30 @@ const Composition = () => {
                 <p>Select a note or select an accidental</p>
             </div>
         )
+    }
+
+    const joinNotes = (givenNotes) => {
+        return givenNotes.join('');
+    }
+
+    const handleNoteChange = (selectedNote, e, noteIndex ) => {
+        let copyNoteCollection = [...notes];
+        console.log(copyNoteCollection);
+        console.log(selectedNote);
+        if(typeof(selectedNote) === 'object'){
+            copyNoteCollection[noteIndex] = selectedNote.Rest;
+            setNotes(copyNoteCollection);
+        } else {
+            if(notes[noteIndex] === selectedNote.Rest){
+                copyNoteCollection[noteIndex] = `${selectedNote}2`;
+                setNotes(copyNoteCollection);
+            } else {
+                let newNote = notes[noteIndex].split("");
+                newNote[0] = selectedNote;
+                copyNoteCollection[noteIndex] = joinNotes(newNote);
+                setNotes(copyNoteCollection);
+            }
+        }
     }
 
     return(
