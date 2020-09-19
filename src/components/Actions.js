@@ -1,6 +1,8 @@
 const ACTIONS = {
     FETCH_DATA: 'FETCH_DATA',
-    FETCH_ERROR: 'FETCH_ERROR'
+    FETCH_ERROR: 'FETCH_ERROR',
+    OPEN_JAM: 'OPEN_JAM',
+    UPDATE_JAM: 'UPDATE_JAM'
 }
 
 export default ACTIONS;

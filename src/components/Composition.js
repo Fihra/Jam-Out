@@ -1,20 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { JamContext } from '../App';
 import * as Tone from 'tone';
+
 import Popover from "@kiwicom/orbit-components/lib/Popover";
 import Button from '@kiwicom/orbit-components/lib/Button';
-
-import MenuHamburger from "@kiwicom/orbit-components/lib/icons/MenuHamburger";
-import PlusCircle from "@kiwicom/orbit-components/lib/icons/PlusCircle";
-
-import Document from "@kiwicom/orbit-components/lib/icons/Document"
-
-import Check from "@kiwicom/orbit-components/lib/icons/Check"
-
-import MusicalInstruments from "@kiwicom/orbit-components/lib/icons/MusicalInstruments"
-
-
 import Slider from 'react-rangeslider';
+
 import 'react-rangeslider/lib/index.css';
 
 let plucker = new Tone.PluckSynth().toDestination();
@@ -59,7 +50,10 @@ let compositionHolder = {};
 
 const Composition = () => {
     const {dataState} = useContext(JamContext);
-    
+    const jamContext = useContext(JamContext);
+
+    // console.log(jamContext.dataState);
+    const [jamIndex, setJamIndex] = useState(0);
     const [title, setTitle] = useState("")
     const [username, setUsername] = useState("");
     const [description, setDescription] = useState("");
@@ -75,7 +69,8 @@ const Composition = () => {
 
     useEffect(() =>{
         if(Object.entries(dataState.data).length !==0){
-            const { title, username, description, tempo, notes, bassDrumNotes, cymbalNotes, snareNotes } = dataState.data[0];
+            setJamIndex(jamContext.dataState.jamIndex);
+            const { title, username, description, tempo, notes, bassDrumNotes, cymbalNotes, snareNotes } = jamContext.dataState.data[jamIndex];
             setTitle(title);
             setUsername(username);
             setDescription(description);
@@ -86,7 +81,7 @@ const Composition = () => {
             setSnareNotes(parsingNotes(snareNotes));
 
         }
-    }, [dataState])
+    }, [dataState, jamContext.dataState])
 
     useEffect(() => {
         compositionHolder = {
@@ -99,7 +94,8 @@ const Composition = () => {
             cymbalNotes: cymbalNotes,
             snareNotes: snareNotes
         }
-        console.log(compositionHolder);
+        jamContext.dataDispatch({type: "UPDATE_JAM", payload: compositionHolder});
+        // console.log(compositionHolder);
     }, [title, username, description, tempo, notes, kickNotes, cymbalNotes, snareNotes])
 
 
