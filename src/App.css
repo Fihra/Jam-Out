@@ -104,11 +104,32 @@
 
 .note-container {
   display: inline-block;
-  border: 1px solid black;
-  text-align: justify;
-  padding: 20px;
+  /* border: 1px solid black; */
+  /* text-align: justify; */
+  padding: 25px;
   width: 30px;
   height: 30px;
+}
+
+
+.note-selection {
+  width: 450px;
+  height: 170px;
+}
+
+.note-selection li{
+  display: inline-block;
+  width: auto;
+  height: auto;
+  list-style: none;
+}
+
+.test-button-popover{
+  display: flex;
+  padding-left: 50%;
+  width: 50px;
+  height: 50px;
+  
 }
 
 .tempo-slider {
@@ -220,23 +241,3 @@
 
 /*========================*/
 
-.test-popover {
-  width: 500px;
-  height: 400px;
-  
-}
-
-.test-popover li{
-  display: inline-block;
-  width: auto;
-  height: auto;
-  list-style: none;
-}
-
-.test-button-popover{
-  display: flex;
-  padding-left: 50%;
-  width: 50px;
-  height: 50px;
-  
-}

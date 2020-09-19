@@ -1,9 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { JamContext } from '../App';
 import * as Tone from 'tone';
+import { notesArray, accidental } from './NoteChoices';
 
 import Popover from "@kiwicom/orbit-components/lib/Popover";
 import Button from '@kiwicom/orbit-components/lib/Button';
+
 import Slider from 'react-rangeslider';
 
 import 'react-rangeslider/lib/index.css';
@@ -52,7 +54,6 @@ const Composition = () => {
     const {dataState} = useContext(JamContext);
     const jamContext = useContext(JamContext);
 
-    // console.log(jamContext.dataState);
     const [jamIndex, setJamIndex] = useState(0);
     const [title, setTitle] = useState("")
     const [username, setUsername] = useState("");
@@ -166,13 +167,11 @@ const Composition = () => {
     const showComposition = () => {   
         return notes.map((note, i) => {
             return (
-                // <Popover content={testShow()}>
-                    <div key={i} className="note-container">
-                        {/* <button text="Open"/> */}
-                        <label>{typeof(note) === 'object' ? "Rest" : note}</label>
-                        
-                    </div>
-                // </Popover>
+                <div key={i} className="note-container">
+                    <Popover noPadding content={chooseNotes()}>
+                        <Button width={'100%'} size={'large'}>{typeof(note) === 'object' ? "Rest" : note}</Button>
+                    </Popover>
+                </div>
             )
         })
     }
@@ -212,33 +211,32 @@ const Composition = () => {
        return parsedNotes;
     }
 
-    const testShow = () => {
+    const chooseNotes = () => {
+        console.log(accidental);
+        console.log(notesArray);
         return( 
-            <div className="test-popover">
+            <div className="note-selection">
                 <ul>
-                    <li><Button>Button 1</Button></li>
-                    <li><Button>Button 2</Button></li>
-                    <li><Button>Button 3</Button></li>
-                    <li><Button>Button 4</Button></li>
-                    <li><Button>Button 5</Button></li>
-                    <li><Button>Button 6</Button></li>
-                    <li><Button>Button 7</Button></li>
-                    <li><Button>Button 8</Button></li>
+                    {notesArray.map((noteSelect, i) => {
+                        if(typeof(noteSelect) === 'object'){
+                            return <li><Button>Rest</Button></li>
+                        } else {
+                            return <li><Button>{noteSelect}</Button></li>
+                        }
+                    })}
                 </ul>
-                
-                <p>Some text here to describe things</p>
+                <ul>
+                    {accidental.map((accidentalSelect, i) => {
+                        return <li><Button>{accidentalSelect}</Button></li>
+                    })}
+                </ul>
+                <p>Select a note or select an accidental</p>
             </div>
         )
     }
 
     return(
         <div className="composition-container">
-           
-            <div className="test-button-popover">
-            <Popover noPadding content={testShow()}>
-                <Button >hello</Button>
-            </Popover>
-            </div>
             <button onClick={() => setIsPlaying(!isPlaying)}>{isPlaying ? "Stop" : "Play"}</button>
             {Object.entries(dataState.data).length !==0 ? showDetails() : null }
                 <div className="music-container">
