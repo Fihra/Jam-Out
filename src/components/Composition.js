@@ -225,7 +225,7 @@ const Composition = () => {
                 </ul>
                 <ul>
                     {accidental.map((accidentalSelect, i) => {
-                        return <li><Button>{accidentalSelect}</Button></li>
+                        return <li key={i}><Button onClick={(e) => handleAccidentalChange(accidentalSelect, noteIndex, e)}>{accidentalSelect}</Button></li>
                     })}
                 </ul>
                 <p>Select a note or select an accidental</p>
@@ -239,13 +239,14 @@ const Composition = () => {
 
     const handleNoteChange = (selectedNote, e, noteIndex ) => {
         let copyNoteCollection = [...notes];
-        console.log(copyNoteCollection);
-        console.log(selectedNote);
-        if(typeof(selectedNote) === 'object'){
+        //TODO:
+        //Fix REST note change
+        //It keeps return Object Object as string
+        if(notes[noteIndex] === 'object'){
             copyNoteCollection[noteIndex] = selectedNote.Rest;
             setNotes(copyNoteCollection);
         } else {
-            if(notes[noteIndex] === selectedNote.Rest){
+            if(typeof(notes[noteIndex]) === 'object'){
                 copyNoteCollection[noteIndex] = `${selectedNote}2`;
                 setNotes(copyNoteCollection);
             } else {
@@ -254,6 +255,50 @@ const Composition = () => {
                 copyNoteCollection[noteIndex] = joinNotes(newNote);
                 setNotes(copyNoteCollection);
             }
+        }
+    }
+
+    const addAccidental = (newNote, givenAccidental) => {
+        let copiedNotes = [...newNote];
+
+        if(newNote.length === 2){
+            copiedNotes.splice(1, 0, givenAccidental);
+        } else if(newNote.length === 3){
+            console.log(accidental[2])
+            givenAccidental === "#" ?
+            copiedNotes[1] = accidental[1] :
+            copiedNotes[1] = accidental[2]
+        }
+        return joinNotes(copiedNotes);
+    }
+
+    const handleAccidentalChange = (accidentalSelect, noteIndex, e) => {
+        console.log(accidentalSelect);
+        console.log(noteIndex);
+        let copyNoteCollection = [...notes];
+        let updatedNote;
+
+        if(notes[noteIndex] === null){
+            return;
+        } else {
+            let newNote = notes[noteIndex].split("");
+            switch(accidentalSelect){
+                case accidental[0]:
+                    updatedNote = newNote.filter(item => {
+                        return(item !== "b") && (item !== "#")
+                    });
+                    updatedNote = joinNotes(updatedNote);
+                    break;
+                case accidental[1]:
+                    updatedNote = addAccidental(newNote, accidentalSelect);
+                    break;
+                case accidental[2]:
+                    updatedNote = addAccidental(newNote, accidentalSelect);
+                default:
+                    break;
+            }
+            copyNoteCollection[noteIndex] = updatedNote;
+            setNotes(copyNoteCollection);
         }
     }
 

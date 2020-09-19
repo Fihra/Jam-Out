@@ -45,7 +45,7 @@ const reducer = (state, action) => {
         jamIndex: action.payload
       }
     case Actions.UPDATE_JAM:
-      console.log(action.payload);
+      // console.log(action.payload);
       // return {
       //   loading: false,
       //   error: '',
