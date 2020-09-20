@@ -3,6 +3,7 @@ import { JamContext } from '../App';
 import * as Tone from 'tone';
 import { notesArray, accidental } from './NoteChoices';
 
+import { EditableText } from '@blueprintjs/core';
 import Popover from "@kiwicom/orbit-components/lib/Popover";
 import Button from '@kiwicom/orbit-components/lib/Button';
 
@@ -49,6 +50,7 @@ let cymbalPart;
 let snarePart;
 
 let compositionHolder = {};
+let compositionHolderBeforeSave = {};
 
 const Composition = () => {
     const {dataState} = useContext(JamContext);
@@ -67,6 +69,12 @@ const Composition = () => {
     const [snareNotes, setSnareNotes] = useState("");
 
     const [isPlaying, setIsPlaying] = useState(false);
+
+    useEffect(() =>{
+        if(Object.entries(dataState.data).length !==0){
+            
+        }   
+    }, [])
 
     useEffect(() =>{
         if(Object.entries(dataState.data).length !==0){
@@ -95,8 +103,12 @@ const Composition = () => {
             cymbalNotes: cymbalNotes,
             snareNotes: snareNotes
         }
+        if(Object.entries(compositionHolderBeforeSave).length === 0){
+            compositionHolderBeforeSave = compositionHolder;
+        }
+        console.log(compositionHolderBeforeSave);
         jamContext.dataDispatch({type: "UPDATE_JAM", payload: compositionHolder});
-        // console.log(compositionHolder);
+        console.log(compositionHolder);
     }, [title, username, description, tempo, notes, kickNotes, cymbalNotes, snareNotes])
 
 
@@ -147,7 +159,27 @@ const Composition = () => {
     const showDetails = () =>{
         return(
             <div>
-                <h2>{title} by {username}</h2>
+                {/* <h2>{title} by {username}</h2> */}
+                <EditableText
+                    alwaysRenderInput={true}
+                    maxLength={100}
+                    placeholder="Edit title..."
+                    value={title}
+                    selectAllOnFocus={false}
+                    onChange={setTitle}
+                    onConfirm={setTitle}
+                />
+                by
+                <EditableText
+                    alwaysRenderInput={true}
+                    maxLength={20}
+                    placeholder="Edit name..."
+                    value={username}
+                    selectAllOnFocus={false}
+                    onChange={setUsername}
+                    onConfirm={setUsername}
+                />
+                {/* <EditableText value={title} minLines={5} maxLines={12} onConfirm={() => setTitle()}/> */}
                 <div className="tempo-slider">
                     <p><label>Tempo: {tempo}</label></p>
                     <Slider 

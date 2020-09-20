@@ -44,6 +44,8 @@ const reducer = (state, action) => {
         ...state,
         jamIndex: action.payload
       }
+    case Actions.NEW_JAM:
+      return state;
     case Actions.UPDATE_JAM:
       // console.log(action.payload);
       // return {
