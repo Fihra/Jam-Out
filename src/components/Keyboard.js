@@ -3,8 +3,10 @@ import * as Tone from 'tone';
 import { Piano, MidiNumbers, KeyboardShortcuts } from 'react-piano';
 import 'react-piano/dist/styles.css';
 import { ListOfSynths } from './Synths';
+import { Slider } from '@blueprintjs/core';
 
-import Slider from 'react-rangeslider';
+import '@blueprintjs/core/lib/css/blueprint.css'
+// import Slider from 'react-rangeslider';
 import 'react-rangeslider/lib/index.css';
 
 const SynthManager = {
@@ -66,20 +68,36 @@ const Keyboard = () => {
         let result = ListOfSynths[event.target.value];
         setOsc({sound: result.sound})
     }
+
+    const roundDecimalValue = (value) => {
+        return Math.round(value*100)/100;
+    }
    
     return(
         <div className='keyboard-container'>
             <div className='keyboard-settings'>
                 {/* Volume */}
                 <label id={'volume-label'}>Volume: {volume}</label>
-                    <Slider
+                    {/* <Slider
                         min={-25}
                         max={25}
                         value={volume}
                         orientation="vertical"
                         onChange={(e) => setVolume(e)}
                         
+                    /> */}
+                    <Slider
+                        className='volume-slider'
+                        min={-10}
+                        max={10}
+                        stepSize={0.1}
+                        labelStepSize={10}
+                        onChange={(e) => setVolume(roundDecimalValue(e))}
+                        value={volume}
+                        vertical={true}
+                        // Math.round(value*100)/100
                     />
+                    {/* parseFloat(e).toFixed(2) */}
                 {/* Synths */}
                     <h3>Synths</h3>
                 <select onChange={e => handleChange(e)}>
@@ -92,37 +110,37 @@ const Keyboard = () => {
                 <Slider
                         min={0.0}
                         max={1.0}
-                        step={0.01}
+                        stepSize={0.01}
                         value={attackLevel}
-                        orientation="vertical"
-                        onChange={(e) =>setAttackLevel(parseFloat(e).toFixed(2))}
+                        vertical={true}
+                        onChange={(e) =>setAttackLevel(roundDecimalValue(e))}
                 />
                 <label className="adsr-label">Decay: {decayLevel}</label>
                 <Slider
                         min={0.0}
                         max={1.0}
-                        step={0.01}
+                        stepSize={0.01}
                         value={decayLevel}
-                        orientation="vertical"
-                        onChange={(e) =>setDecayLevel(parseFloat(e).toFixed(2))}
+                        vertical={true}
+                        onChange={(e) =>setDecayLevel(roundDecimalValue(e))}
                 />
                 <label className="adsr-label">Sustain: {sustainLevel}</label>
                 <Slider
                         min={0.0}
                         max={1.0}
-                        step={0.01}
+                        stepSize={0.01}
                         value={sustainLevel}
-                        orientation="vertical"
-                        onChange={(e) =>setSustainLevel(parseFloat(e).toFixed(2))}
+                        vertical={true}
+                        onChange={(e) =>setSustainLevel(roundDecimalValue(e))}
                 />
                 <label className="adsr-label">Release: {releaseLevel}</label>
                 <Slider
                         min={0.0}
                         max={1.0}
-                        step={0.01}
+                        stepSize={0.01}
                         value={releaseLevel}
-                        orientation="vertical"
-                        onChange={(e) =>setReleaseLevel(parseFloat(e).toFixed(2))}
+                        vertical={true}
+                        onChange={(e) =>setReleaseLevel(roundDecimalValue(e))}
                 />
             </div>
             {/* Piano Keyboard */}

@@ -70,11 +70,11 @@ const Composition = () => {
 
     const [isPlaying, setIsPlaying] = useState(false);
 
-    useEffect(() =>{
-        if(Object.entries(dataState.data).length !==0){
+    // useEffect(() =>{
+    //     if(Object.entries(dataState.data).length !==0){
             
-        }   
-    }, [])
+    //     }   
+    // }, [])
 
     useEffect(() =>{
         if(Object.entries(dataState.data).length !==0){
