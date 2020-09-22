@@ -77,15 +77,8 @@ const Keyboard = () => {
         <div className='keyboard-container'>
             <div className='keyboard-settings'>
                 {/* Volume */}
-                <label id={'volume-label'}>Volume: {volume}</label>
-                    {/* <Slider
-                        min={-25}
-                        max={25}
-                        value={volume}
-                        orientation="vertical"
-                        onChange={(e) => setVolume(e)}
-                        
-                    /> */}
+                <div className="volume-container">
+                    <label id={'volume-label'}>Volume: {volume}</label>
                     <Slider
                         className='volume-slider'
                         min={-10}
@@ -95,53 +88,63 @@ const Keyboard = () => {
                         onChange={(e) => setVolume(roundDecimalValue(e))}
                         value={volume}
                         vertical={true}
-                        // Math.round(value*100)/100
                     />
-                    {/* parseFloat(e).toFixed(2) */}
+                </div>
                 {/* Synths */}
-                    <h3>Synths</h3>
-                <select onChange={e => handleChange(e)}>
-                    {SynthChoice()}
-                </select>
+                <h3>Synths</h3>
+                    <select onChange={e => handleChange(e)}>
+                        {SynthChoice()}
+                    </select>
                 
                 {/* ADSR */}
-                <h3>ADSR</h3>
-                <label className="adsr-label">Attack: {attackLevel}</label>
-                <Slider
-                        min={0.0}
-                        max={1.0}
-                        stepSize={0.01}
-                        value={attackLevel}
-                        vertical={true}
-                        onChange={(e) =>setAttackLevel(roundDecimalValue(e))}
-                />
-                <label className="adsr-label">Decay: {decayLevel}</label>
-                <Slider
-                        min={0.0}
-                        max={1.0}
-                        stepSize={0.01}
-                        value={decayLevel}
-                        vertical={true}
-                        onChange={(e) =>setDecayLevel(roundDecimalValue(e))}
-                />
-                <label className="adsr-label">Sustain: {sustainLevel}</label>
-                <Slider
-                        min={0.0}
-                        max={1.0}
-                        stepSize={0.01}
-                        value={sustainLevel}
-                        vertical={true}
-                        onChange={(e) =>setSustainLevel(roundDecimalValue(e))}
-                />
-                <label className="adsr-label">Release: {releaseLevel}</label>
-                <Slider
-                        min={0.0}
-                        max={1.0}
-                        stepSize={0.01}
-                        value={releaseLevel}
-                        vertical={true}
-                        onChange={(e) =>setReleaseLevel(roundDecimalValue(e))}
-                />
+                <div className="adsr-container">
+                    <h3>ADSR</h3>
+                    <ul>
+                        <li><label className="adsr-label">Attack: {attackLevel}</label>
+                        <Slider
+                                min={0.0}
+                                max={1.0}
+                                stepSize={0.01}
+                                value={attackLevel}
+                                vertical={true}
+                                onChange={(e) =>setAttackLevel(roundDecimalValue(e))}
+                        />
+                        </li>
+                        <li>
+                        <label className="adsr-label">Decay: {decayLevel}</label>
+                        <Slider
+                                min={0.0}
+                                max={1.0}
+                                stepSize={0.01}
+                                value={decayLevel}
+                                vertical={true}
+                                onChange={(e) =>setDecayLevel(roundDecimalValue(e))}
+                        />
+                        </li>
+                        <li>
+                        <label className="adsr-label">Sustain: {sustainLevel}</label>
+                        <Slider
+                                min={0.0}
+                                max={1.0}
+                                stepSize={0.01}
+                                value={sustainLevel}
+                                vertical={true}
+                                onChange={(e) =>setSustainLevel(roundDecimalValue(e))}
+                        />
+                        </li>
+                        <li>
+                        <label className="adsr-label">Release: {releaseLevel}</label>
+                        <Slider
+                                min={0.0}
+                                max={1.0}
+                                stepSize={0.01}
+                                value={releaseLevel}
+                                vertical={true}
+                                onChange={(e) =>setReleaseLevel(roundDecimalValue(e))}
+                        />
+                        </li>
+                    </ul>
+                </div>
             </div>
             {/* Piano Keyboard */}
             <div className={'piano-container'}>

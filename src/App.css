@@ -80,17 +80,27 @@
 
 .keyboard-settings {
   display: flex;
-  width: 300px;
+  width: 50%;
   height: 100px;
   margin-left: 150px;
+}
+
+.volume-container{
+  padding: 50px;
 }
 
 .volume-slider {
   height: 400px;
 }
 
-.adsr-label{
-  
+.adsr-container ul{
+  display: flex;
+}
+
+.adsr-container ul li{
+  list-style: none;
+  width: 150px;
+  justify-content: space-between;
 }
 /*========================*/
 
@@ -110,9 +120,9 @@
   display: inline-block;
   /* border: 1px solid black; */
   /* text-align: justify; */
-  padding: 25px;
-  width: 30px;
-  height: 30px;
+  padding: 40px;
+  width: 50px;
+  height: 80px;
 }
 
 
@@ -154,11 +164,11 @@
   background-color: black;
   display: inline-block;
   box-sizing: padding-box;
-  padding: 15px;
-  padding-bottom: 3%;
+  padding: 10px;
+  padding-bottom: 6%;
   border: 1px solid black;
-  width: 30px;
-  height: 30px;
+  width: 60px;
+  height: 50px;
   margin: 3px;
 }
 
@@ -186,11 +196,11 @@
   background-color: yellow;
   display: inline-block;
   box-sizing: padding-box;
-  padding: 15px;
-  padding-bottom: 3%;
+  padding: 10px;
+  padding-bottom: 6%;
   border: 1px solid black;
-  width: 30px;
-  height: 30px;
+  width: 60px;
+  height: 50px;
   margin: 3px;
 }
 
@@ -217,11 +227,11 @@
   background-color: green;
   display: inline-block;
   box-sizing: padding-box;
-  padding: 15px;
-  padding-bottom: 3%;
+  padding: 10px;
+  padding-bottom: 6%;
   border: 1px solid black;
-  width: 30px;
-  height: 30px;
+  width: 60px;
+  height: 50px;
   margin: 3px;
 }
 

@@ -68,6 +68,9 @@ const Composition = () => {
     const [cymbalNotes, setCymbalNotes] = useState("");
     const [snareNotes, setSnareNotes] = useState("");
 
+    //TODO:
+    //Volume controllers for each part of the drumset
+
     const [isPlaying, setIsPlaying] = useState(false);
 
     // useEffect(() =>{
@@ -160,6 +163,7 @@ const Composition = () => {
         return(
             <div>
                 {/* <h2>{title} by {username}</h2> */}
+                <h2>
                 <EditableText
                     alwaysRenderInput={true}
                     maxLength={100}
@@ -169,7 +173,8 @@ const Composition = () => {
                     onChange={setTitle}
                     onConfirm={setTitle}
                 />
-                by
+                </h2>
+                
                 <EditableText
                     alwaysRenderInput={true}
                     maxLength={20}
@@ -180,17 +185,28 @@ const Composition = () => {
                     onConfirm={setUsername}
                 />
                 {/* <EditableText value={title} minLines={5} maxLines={12} onConfirm={() => setTitle()}/> */}
+                {/* <p>{description}</p>   */}
+                <EditableText 
+                    multiline={true}
+                    alwaysRenderInput={true}
+                    maxLength={100}
+                    placeholder="Edit description"
+                    value={description}
+                    selectAllOnFocus={false}
+                    onChange={setDescription}
+                    onConfirm={setDescription} 
+                />
+                
                 <div className="tempo-slider">
-                    <p><label>Tempo: {tempo}</label></p>
-                    <Slider 
-                            min={40}
-                            max={280}
-                            value={tempo}
-                            orientation="horizontal"
-                            onChange={(e) => setTempo(e)}
-                    />
+                <p><label>Tempo: {tempo}</label></p>
+                <Slider 
+                        min={40}
+                        max={280}
+                        value={tempo}
+                        orientation="horizontal"
+                        onChange={(e) => setTempo(e)}
+                />
                 </div>
-                <p>{description}</p>   
             </div>
         )
     }
@@ -208,10 +224,43 @@ const Composition = () => {
         })
     }
 
+    const handleKickChange = (e, kick, kickIndex) => {
+        let copyKickDrumNotes = [...kickNotes];
+        if(kick === null){
+            copyKickDrumNotes[kickIndex] = "C2";
+            setKickNotes(copyKickDrumNotes); 
+        } else {
+            copyKickDrumNotes[kickIndex] = null;
+            setKickNotes(copyKickDrumNotes);
+        }
+    }
+
+    const handleCymbalChange = (e, cymbal, cymbalIndex) => {
+        let copyCymbalDrumNotes = [...cymbalNotes];
+        if(cymbal === null){
+            copyCymbalDrumNotes[cymbalIndex] = "50";
+            setCymbalNotes(copyCymbalDrumNotes); 
+        } else {
+            copyCymbalDrumNotes[cymbalIndex] = null;
+            setCymbalNotes(copyCymbalDrumNotes);
+        }
+    }
+
+    const handleSnareChange = (e, snare, snareIndex) => {
+        let copySnareDrumNotes = [...snareNotes];
+        if(snare === null){
+            copySnareDrumNotes[snareIndex] = "C3";
+            setSnareNotes(copySnareDrumNotes); 
+        } else {
+            copySnareDrumNotes[snareIndex] = null;
+            setSnareNotes(copySnareDrumNotes);
+        }
+    }
+
     const playKickDrum = () => {
         return kickNotes.map((kick, i) => {
             return (    
-                <div key={i} className="kick-box">
+                <div key={i} className="kick-box" onClick={(e) => handleKickChange(e, kick, i)}>
                     {kick !== null ? <span className="kick-on"></span> : <span className="kick-off"></span>}
                 </div>   
             )
@@ -220,7 +269,7 @@ const Composition = () => {
 
     const playCymbal = () => {
         return cymbalNotes.map((cymbal, i) => {
-            return <div key={i} className="cymbal-box">
+            return <div key={i} className="cymbal-box" onClick={(e) => handleCymbalChange(e, cymbal, i)}>
                 {cymbal !== null ? <span className="cymbal-on"></span> : <span className="cymbal-off"></span>}
             </div>
         })
@@ -228,7 +277,7 @@ const Composition = () => {
 
     const playSnare = () => {
         return snareNotes.map((snare, i) => {
-            return <div key={i} className="snare-box">
+            return <div key={i} className="snare-box" onClick={(e) => handleSnareChange(e, snare, i)}>
                 {snare !== null ? <span className="snare-on"></span> : <span className="snare-off"></span>}
             </div>
         })
