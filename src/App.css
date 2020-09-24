@@ -68,21 +68,26 @@
   margin: 150px;
   position: relative;
   display: block;
+  padding-top: 20%;
+  width: 50px;
+  height: 50px;
 }
 
 .piano-container {
   /* display: flex; */
   position: relative;
   align-items: center;
-  padding: 170px;
+  margin-top: 150px;
+  padding: 100px;
+  margin-left:-150px;
   
 }
 
 .keyboard-settings {
   display: flex;
-  width: 50%;
-  height: 100px;
-  margin-left: 150px;
+  width: 60%;
+  height: 20px;
+  margin-left: 130px;
 }
 
 .volume-container{
@@ -162,6 +167,16 @@
   width:1200px;
   padding: 20px;
   display: block;
+}
+
+/* .drum-volume-container{
+  width: 25px;
+  position: relative;
+  float: left;
+} */
+
+.drum-volume-slider {
+  /* padding: 10px; */
 }
 /*========================*/
 .kick-box {
