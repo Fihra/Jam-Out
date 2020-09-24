@@ -340,10 +340,9 @@ const Composition = () => {
 
     const handleNoteChange = (selectedNote, e, noteIndex ) => {
         let copyNoteCollection = [...notes];
-        //TODO:
-        //Fix REST note change
-        //It keeps return Object Object as string
-        if(notes[noteIndex] === 'object'){
+    
+        if(typeof(selectedNote) === 'object'){
+            console.log("rest hit");
             copyNoteCollection[noteIndex] = selectedNote.Rest;
             setNotes(copyNoteCollection);
         } else {
