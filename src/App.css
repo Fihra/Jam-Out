@@ -154,6 +154,10 @@
   height: 50px;
 }
 
+.rangeslider-horizontal .rangeslider__fill {
+  background-color: #1e88e5;
+}
+
 .drums-container {
   width:1200px;
   padding: 20px;

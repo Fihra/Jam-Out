@@ -11,3 +11,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.rangeslider-horizontal .rangeslider__fill {
+  background-color: #1e88e5;
+}

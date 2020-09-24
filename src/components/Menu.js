@@ -4,6 +4,7 @@ import Drawer from "@kiwicom/orbit-components/lib/Drawer";
 import Button from '@kiwicom/orbit-components/lib/Button';
 import ListChoice from "@kiwicom/orbit-components/lib/ListChoice";
 import List from "@kiwicom/orbit-components/lib/List";
+import Actions from './Actions';
 
 const Menu = () => {
     const jamContext = useContext(JamContext);
@@ -11,10 +12,21 @@ const Menu = () => {
     const [showDrawer, setShowDrawer] = useState(false);
     const [openJams, setOpenJams] = useState(false);
     const menuButtons = ["New", "Open", "Save"];
-    console.log(jamContext.dataState);
+    // console.log(jamContext.dataState);
+
+    const newJam = {
+        username: "Musician Name",
+        title: "Untitled",
+        description: "Insert Description",
+        tempo: 120,
+        notes: "C2-Eb2-G2-Eb2-null-Ab2-G2-null-Eb2-Bb1-Eb2-Bb1-Ab2-G2-null-Bb2",
+        bassDrumNotes: "null-null-null-null-null-null-null-null-null-null-null-null-null-null-null-null",
+        cymbalNotes: "null-null-null-null-null-null-null-null-null-null-null-null-null-null-null-null",
+        snareNotes: "null-null-null-null-null-null-null-null-null-null-null-null-null-null-null-null"
+    }
 
     useEffect(() =>{
-        console.log(jamContext.dataState);
+        // console.log(jamContext.dataState);
     }, [jamContext.dataState])
 
     const showMenu = () => {
@@ -27,6 +39,7 @@ const Menu = () => {
         switch(item){
             case "New":
                 console.log("New Jam");
+                jamContext.dataDispatch({type: Actions.NEW_JAM, payload: newJam});
                 return;
             case "Open":
                 if(openJams){
@@ -36,6 +49,10 @@ const Menu = () => {
                 }
             case "Save":
                 console.log("Save Jam");
+                const savedJam = jamContext.dataState.data[jamContext.dataState.jamIndex];
+                // console.log(jamContext.dataState.currentJam);
+                console.log(savedJam);
+                // jamContext.dataDispatch({type: Actions.UPDATE_JAM, payload: savedJam})
                 return;
             default:
                 return;
@@ -46,7 +63,7 @@ const Menu = () => {
         return jamContext.dataState.data.map((jam, i) => {
             return (<ListChoice
                 description={jam.description}
-                onClick={() => jamContext.dataDispatch({type: 'OPEN_JAM', payload: i})}
+                onClick={() => jamContext.dataDispatch({type: Actions.OPEN_JAM, payload: i})}
                 title={`${jam.title} by ${jam.username}`}
             />)
         })

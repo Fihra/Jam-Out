@@ -3,7 +3,7 @@ const ACTIONS = {
     FETCH_ERROR: 'FETCH_ERROR',
     NEW_JAM: 'NEW_JAM',
     OPEN_JAM: 'OPEN_JAM',
-    UPDATE_JAM: 'UPDATE_JAM'
+    CURRENT_JAM: 'CURRENT_JAM'
 }
 
 export default ACTIONS;

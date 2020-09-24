@@ -8,6 +8,9 @@ import Popover from "@kiwicom/orbit-components/lib/Popover";
 import Button from '@kiwicom/orbit-components/lib/Button';
 
 import Slider from 'react-rangeslider';
+import 'react-rangeslider/lib/index.css';
+// import { Slider } from '@blueprintjs/core';
+import Actions from './Actions';
 
 import 'react-rangeslider/lib/index.css';
 
@@ -57,6 +60,7 @@ const Composition = () => {
     const jamContext = useContext(JamContext);
 
     const [jamIndex, setJamIndex] = useState(0);
+    const [id, setID] = useState("");
     const [title, setTitle] = useState("")
     const [username, setUsername] = useState("");
     const [description, setDescription] = useState("");
@@ -70,19 +74,17 @@ const Composition = () => {
 
     //TODO:
     //Volume controllers for each part of the drumset
+    const [kickVolume, setKickVolume] = useState(0);
+    const [cymbalVolume, setCymbalVolume] = useState(0);
+    const [snareVolume, setSnareVolume] = useState(0);
 
     const [isPlaying, setIsPlaying] = useState(false);
-
-    // useEffect(() =>{
-    //     if(Object.entries(dataState.data).length !==0){
-            
-    //     }   
-    // }, [])
 
     useEffect(() =>{
         if(Object.entries(dataState.data).length !==0){
             setJamIndex(jamContext.dataState.jamIndex);
-            const { title, username, description, tempo, notes, bassDrumNotes, cymbalNotes, snareNotes } = jamContext.dataState.data[jamIndex];
+            const { id, title, username, description, tempo, notes, bassDrumNotes, cymbalNotes, snareNotes } = jamContext.dataState.data[jamIndex];
+            setID(id);
             setTitle(title);
             setUsername(username);
             setDescription(description);
@@ -96,7 +98,12 @@ const Composition = () => {
     }, [dataState, jamContext.dataState])
 
     useEffect(() => {
+        console.log(jamContext.dataState);
+    }, [])
+
+    useEffect(() => {
         compositionHolder = {
+            id: id,
             title: title,
             username: username,
             description: description,
@@ -109,9 +116,11 @@ const Composition = () => {
         if(Object.entries(compositionHolderBeforeSave).length === 0){
             compositionHolderBeforeSave = compositionHolder;
         }
-        console.log(compositionHolderBeforeSave);
-        jamContext.dataDispatch({type: "UPDATE_JAM", payload: compositionHolder});
-        console.log(compositionHolder);
+        // console.log(compositionHolderBeforeSave);
+        // console.log(compositionHolder);
+        // jamContext.dataDispatch({type: Actions.CURRENT_JAM, payload: compositionHolder});
+        
+
     }, [title, username, description, tempo, notes, kickNotes, cymbalNotes, snareNotes])
 
 
@@ -162,7 +171,6 @@ const Composition = () => {
     const showDetails = () =>{
         return(
             <div>
-                {/* <h2>{title} by {username}</h2> */}
                 <h2>
                 <EditableText
                     alwaysRenderInput={true}
@@ -184,8 +192,7 @@ const Composition = () => {
                     onChange={setUsername}
                     onConfirm={setUsername}
                 />
-                {/* <EditableText value={title} minLines={5} maxLines={12} onConfirm={() => setTitle()}/> */}
-                {/* <p>{description}</p>   */}
+
                 <EditableText 
                     multiline={true}
                     alwaysRenderInput={true}
@@ -199,13 +206,26 @@ const Composition = () => {
                 
                 <div className="tempo-slider">
                 <p><label>Tempo: {tempo}</label></p>
-                <Slider 
+                    <div className='slider-horizontal'>
+                        <Slider 
+                                min={40}
+                                max={280}
+                                value={tempo}
+                                orientation="horizontal"
+                                onChange={(e) => setTempo(e)}
+                        />
+                    </div>
+                    {/* <Slider
                         min={40}
                         max={280}
+                        stepSize={1}
+                        labelStepSize={20}
+
                         value={tempo}
-                        orientation="horizontal"
-                        onChange={(e) => setTempo(e)}
-                />
+                        vertical={false}
+                        onChange={(e) => setTempo(roundDecimalValue(e))}
+                    /> */}
+                     
                 </div>
             </div>
         )

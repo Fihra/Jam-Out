@@ -1,5 +1,6 @@
 import React, { useState, useReducer, createContext, useEffect } from 'react';
 import './App.css';
+import 'react-rangeslider/lib/index.css';
 import Menu from './components/Menu';
 import Actions from './components/Actions';
 import axios from 'axios';
@@ -22,6 +23,7 @@ const initialState = {
   error: '',
   data: {},
   jamIndex: 0,
+  currentJam: {}
 };
 const reducer = (state, action) => {
   switch(action.type){
@@ -39,6 +41,28 @@ const reducer = (state, action) => {
         data: {},
         error: "Error ERROR!"
       }
+    case Actions.NEW_JAM:
+      let newJam = action.payload;
+      axios.post('http://127.0.0.1:8000/api/', {
+            username: newJam.username,
+            title: newJam.title,
+            description: newJam.description,
+            tempo: newJam.tempo,
+            notes: newJam.notes,
+            bassDrumNotes: newJam.bassDrumNotes,
+            cymbalNotes: newJam.cymbalNotes,
+            snareNotes: newJam.snareNotes,
+      })
+      .then(resp => {
+        console.log(resp)
+        return {
+          ...state,
+          data: [...state.data, resp]
+        }
+      })
+
+      return state;
+
     case Actions.OPEN_JAM:
       return {
         ...state,
@@ -46,8 +70,14 @@ const reducer = (state, action) => {
       }
     case Actions.NEW_JAM:
       return state;
-    case Actions.UPDATE_JAM:
-      // console.log(action.payload);
+    case Actions.CURRENT_JAM:
+      return {
+        ...state,
+        currentJam: action.payload
+      }
+      // return{
+
+      // }
       // return {
       //   loading: false,
       //   error: '',
@@ -55,7 +85,7 @@ const reducer = (state, action) => {
       //       return i ===  action.i ?  console.log(jam) : null
       //   })
       // }
-      return state;
+      // return state;
     // case "reset":
     //   return initialState;
     default:
@@ -63,12 +93,30 @@ const reducer = (state, action) => {
   }
 }
 
+// const addNewJam = (state, newJam) => {
+//   console.log(newJam);
+//   axios
+//     .post('http://127.0.0.1:8000/api/', {
+//           username: newJam.username,
+//           title: newJam.title,
+//           description: newJam.description,
+//           tempo: newJam.tempo,
+//           notes: newJam.notes,
+//           bassDrumNotes: newJam.bassDrumNotes,
+//           cymbalNotes: newJam.cymbalNotes,
+//           snareNotes: newJam.snareNotes,
+//     })
+//     .then(resp => {
+//       console.log(resp)
+
+//     })
+// }
+
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    axios
-      .get('http://127.0.0.1:8000/api/')
+    axios.get('http://127.0.0.1:8000/api/')
       .then(resp => {
         dispatch({type: 'FETCH_DATA', payload: resp.data})
           
