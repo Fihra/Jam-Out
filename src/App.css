@@ -44,6 +44,7 @@
 /* App.js */
 
 .menu-btn {
+  padding: 5px;
   list-style: none;
 }
 
@@ -68,7 +69,7 @@
   margin: 150px;
   position: relative;
   display: block;
-  padding-top: 20%;
+  padding-top: 5%;
   width: 50px;
   height: 50px;
 }
@@ -79,7 +80,7 @@
   align-items: center;
   margin-top: 150px;
   padding: 100px;
-  margin-left:-150px;
+  margin-left:0px;
   
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import * as Tone from 'tone';
 import { Piano, MidiNumbers, KeyboardShortcuts } from 'react-piano';
 import 'react-piano/dist/styles.css';

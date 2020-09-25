@@ -9,7 +9,6 @@ import Button from '@kiwicom/orbit-components/lib/Button';
 
 import RangeSlider from 'react-rangeslider';
 import 'react-rangeslider/lib/index.css';
-import { Slider } from '@blueprintjs/core';
 import Actions from './Actions';
 
 import 'react-rangeslider/lib/index.css';
@@ -71,12 +70,6 @@ const Composition = () => {
     const [kickNotes, setKickNotes] = useState("");
     const [cymbalNotes, setCymbalNotes] = useState("");
     const [snareNotes, setSnareNotes] = useState("");
-
-    //TODO:
-    //Volume controllers for each part of the drumset
-    const [kickVolume, setKickVolume] = useState(0);
-    const [cymbalVolume, setCymbalVolume] = useState(0);
-    const [snareVolume, setSnareVolume] = useState(0);
 
     const [isPlaying, setIsPlaying] = useState(false);
 
@@ -154,22 +147,17 @@ const Composition = () => {
         }), notes,"16n");
 
         kickPart = new Tone.Sequence((time, note) => {
-            // console.log("kick:" + kickVolume);
-            // console.log(kickSynth.volume.value);
-            kickSynth.volume.value = kickVolume;
+            kickSynth.volume.value = -10;
             kickSynth.triggerAttackRelease(note, "5hz", time + 0.1);
         }, kickNotes, "16n");
 
         cymbalPart = new Tone.Sequence((time, note) => {
-            console.log(cymbalVolume);
-            console.log(cymbalSynth.volume.value);
-            cymbalSynth.volume.value = -20;
+            cymbalSynth.volume.value = -40;
             cymbalSynth.triggerAttackRelease(note, "2hz", time + 0.1);
         }, cymbalNotes, "16n");
 
         snarePart = new Tone.Sequence((time, note) => {
-            // console.log(snareVolume);
-            snareSynth.volume.value = snareVolume;
+            snareSynth.volume.value = -10;
             snareSynth.triggerAttackRelease(note, "16n", time + 0.1);
         }, snareNotes, "16n");
     }
@@ -410,10 +398,6 @@ const Composition = () => {
         }
     }
 
-    const roundDecimalValue = (value) => {
-        return Math.round(value*100)/100;
-    }
-
     return(
         <div className="composition-container">
             <button onClick={() => setIsPlaying(!isPlaying)}>{isPlaying ? "Stop" : "Play"}</button>
@@ -421,53 +405,14 @@ const Composition = () => {
                 <div className="music-container">
                     {notes.length !== 0 ? showComposition() : null }
                     <div className="drums-container">
-                        <div className="kick-container">
-                            <label>Kick Volume: {kickVolume}</label>
-                            <Slider
-                                className="drum-volume-container"
-                                min={-10}
-                                max={10}
-                                stepSize={0.1}
-                                labelStepSize={10}
-                                onChange={(e) => setKickVolume(roundDecimalValue(e))}
-                                value={kickVolume}
-                                vertical={false}
-                            />
-                            </div>
+                            <label>Kick</label>
                             {notes.length !== 0 ? playKickDrum() : null }
-                        
                         <br></br>
-                        <div className="drum-volume-container">
-                            <label>Cymbal Volume: {cymbalVolume}</label>
-                            <Slider
-                                className="drum-volume-slider"
-                                min={-10}
-                                max={10}
-                                stepSize={0.1}
-                                labelStepSize={10}
-                                onChange={(e) => setCymbalVolume(roundDecimalValue(e))}
-                                value={cymbalVolume}
-                                vertical={false}
-                            />
-                            </div>
+                            <label>Cymbal</label>
                             {notes.length !== 0 ? playCymbal() : null }
-                        
                         <br></br>
-                        <div className="drum-volume-container">
-                            <label>Snare Volume: {snareVolume}</label>
-                            <Slider
-                                className="drum-volume-slider"
-                                min={-10}
-                                max={10}
-                                stepSize={0.1}
-                                labelStepSize={10}
-                                onChange={(e) => setSnareVolume(roundDecimalValue(e))}
-                                value={snareVolume}
-                                vertical={false}
-                            />
-                            </div>
+                            <label>Snare</label>
                             {notes.length !== 0 ? playSnare() : null }
-                        
                     </div>
             </div>
             

@@ -3,14 +3,16 @@ import { JamContext } from '../App';
 import Drawer from "@kiwicom/orbit-components/lib/Drawer";
 import Button from '@kiwicom/orbit-components/lib/Button';
 import ListChoice from "@kiwicom/orbit-components/lib/ListChoice";
-import List from "@kiwicom/orbit-components/lib/List";
+import Modal, { ModalHeader, ModalSection } from "@kiwicom/orbit-components/lib/Modal";
 import Actions from './Actions';
+import Text from "@kiwicom/orbit-components/lib/Text";
 
 const Menu = () => {
     const jamContext = useContext(JamContext);
 
     const [showDrawer, setShowDrawer] = useState(false);
     const [openJams, setOpenJams] = useState(false);
+    const [isCreditsOn, setIsCreditsOn] = useState(false);
     const menuButtons = ["New", "Open", "Save"];
     // console.log(jamContext.dataState);
 
@@ -42,11 +44,13 @@ const Menu = () => {
                 jamContext.dataDispatch({type: Actions.NEW_JAM, payload: newJam});
                 return;
             case "Open":
+                if(isCreditsOn) setIsCreditsOn(false);
                 if(openJams){
                     setOpenJams(false);
                 } else{
                     setOpenJams(true)
                 }
+                return;
             case "Save":
                 console.log("Save Jam");
                 const savedJam = jamContext.dataState.data[jamContext.dataState.jamIndex];
@@ -69,19 +73,49 @@ const Menu = () => {
         })
     }
 
+    const toggleCredits = () => {
+        // console.log(isCreditsOn)
+        if(isCreditsOn){
+            setIsCreditsOn(!isCreditsOn);
+        } else{
+            setIsCreditsOn(true);
+        }
+        
+    }
+    
+    const showCredits = () =>{
+        if(openJams){
+            setOpenJams(false);
+        }
+        return (
+            <Text>  
+                Jam Out
+                Developed by Fabian Fabro
+                Front End: React-Hooks, Kiwicom Orbit, Blueprint.js
+                Back End: Django
+                Libraries used: Tone.js, react-piano, react-rangeslider, axios   
+            </Text>
+        )
+    }
+    // useEffect(() => {
+    //     console.log(isCreditsOn);
+    // }, [isCreditsOn])
+
     return(
         <div className="side-menu">
         <Button
           className='side-btn'
           title="Open Drawer"
           onClick={() => {setShowDrawer(true)}}
-        />
+        >Open Menu
+        </Button>
           <Drawer 
               actions={
-                  <Button size="small">
-                      Sign in
+                  <Button size="small" onClick={toggleCredits}>
+                      Credits
                   </Button>
               }
+              position={"left"}
               onClose={() =>{
                   setShowDrawer(false);
               }}
@@ -90,6 +124,7 @@ const Menu = () => {
               <ul>
                 {showMenu()}
               </ul>
+              {isCreditsOn ? showCredits() : null}
               {Object.entries(jamContext.dataState.data).length !==0 && openJams ? showJams() : null}
           </Drawer>
       </div>
